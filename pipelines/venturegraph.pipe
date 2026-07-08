@@ -1,0 +1,112 @@
+{
+  "pipeline": {
+    "description": "VentureGraph reasoning pipeline — every LLM phase (interpret, reflect, synthesize) of the founder-analysis agent runs through this RocketRide Cloud pipeline. The model itself is served by the Butterbase AI gateway (OpenAI-compatible).",
+    "version": 1,
+    "source": "source_1",
+    "components": [
+      {
+        "id": "source_1",
+        "provider": "chat",
+        "name": "Agent question intake",
+        "config": {
+          "hideForm": true,
+          "mode": "Source",
+          "parameters": {},
+          "type": "chat",
+          "name": "Chat"
+        }
+      },
+      {
+        "id": "llm_1",
+        "provider": "llm_openai_api",
+        "name": "Butterbase AI gateway (OpenAI-compatible)",
+        "config": {
+          "profile": "custom",
+          "custom": {
+            "base_url": "${ROCKETRIDE_LLM_BASE_URL}",
+            "apikey": "${ROCKETRIDE_LLM_APIKEY}",
+            "model": "${ROCKETRIDE_LLM_MODEL}",
+            "modelTotalTokens": 200000
+          },
+          "name": "Butterbase AI gateway (OpenAI-compatible)"
+        },
+        "input": [
+          {
+            "lane": "questions",
+            "from": "source_1"
+          }
+        ]
+      },
+      {
+        "id": "target_1",
+        "provider": "response",
+        "name": "Agent answer return",
+        "config": {},
+        "input": [
+          {
+            "lane": "answers",
+            "from": "llm_1"
+          }
+        ]
+      }
+    ],
+    "project_id": "534481fd-85ef-47c8-9c4a-47b589a4db44"
+  },
+  "components": [
+    {
+      "id": "chat_1",
+      "provider": "chat",
+      "name": "Chat",
+      "config": {
+        "hideForm": true,
+        "mode": "Source",
+        "parameters": {},
+        "type": "chat",
+        "name": "Chat"
+      },
+      "ui": {
+        "position": {
+          "x": 670,
+          "y": 670
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      }
+    },
+    {
+      "id": "llm_openai_api_1",
+      "provider": "llm_openai_api",
+      "name": "OpenAI-Compatible API",
+      "config": {
+        "profile": "custom",
+        "custom": {
+          "apikey": "${ROCKETRIDE_LLM_APIKEY}",
+          "base_url": "https://api.butterbase.ai/v1/app_1mrlsp8a2htn",
+          "model": "anthropic/claude-sonnet-4.6",
+          "modelTotalTokens": 200000
+        },
+        "name": "OpenAI-Compatible API",
+        "parameters": {
+          "google": {}
+        }
+      },
+      "ui": {
+        "position": {
+          "x": 530,
+          "y": 590
+        },
+        "nodeType": "default",
+        "formDataValid": true
+      }
+    }
+  ],
+  "version": 1,
+  "docRevision": 4,
+  "isLocked": false,
+  "snapToGrid": true,
+  "snapGridSize": [
+    10,
+    10
+  ],
+  "project_id": "28883710-5682-4d70-abfd-2c7e4e0e6635"
+}
